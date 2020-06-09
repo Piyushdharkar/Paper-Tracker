@@ -9,11 +9,6 @@ class RoundButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(10.0),
-        ),
-      ),
       elevation: 10.0,
       color: Colors.lightBlueAccent,
       child: FlatButton(
