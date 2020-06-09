@@ -27,44 +27,62 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: [
               Expanded(
-                child: DropDownStream(
-                  label: 'Track no.',
-                  currentValue: trackNo,
-                  collectionName: kFirestoreTracksCollectionName,
-                  fieldName: 'no',
-                  field2Name: 'name',
-                  onChangeCallback: (value, name) {
-                    setState(() {
-                      trackNo = value;
-                      trackName = name;
-                    });
-                  },
+                child: Card(
+                  child: Column(
+                    children: [
+                      Text('Track no.'),
+                      DropDownStream(
+                        currentValue: trackNo,
+                        collectionName: kFirestoreTracksCollectionName,
+                        fieldName: 'no',
+                        field2Name: 'name',
+                        onChangeCallback: (value, name) {
+                          setState(() {
+                            trackNo = value;
+                            trackName = name;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Expanded(
-                child: DropDownStream(
-                  label: 'Current Paper',
-                  currentValue: currentPaper,
-                  collectionName: kFirestorePapersCollectionName,
-                  fieldName: 'name',
-                  onChangeCallback: (value, name) {
-                    setState(() {
-                      currentPaper = value;
-                    });
-                  },
+                child: Card(
+                  child: Column(
+                    children: [
+                      Text('Current Paper'),
+                      DropDownStream(
+                        currentValue: currentPaper,
+                        collectionName: kFirestorePapersCollectionName,
+                        fieldName: 'name',
+                        onChangeCallback: (value, name) {
+                          setState(() {
+                            currentPaper = value;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Expanded(
-                child: DropDownStream(
-                  label: 'Next Paper',
-                  currentValue: nextPaper,
-                  collectionName: kFirestorePapersCollectionName,
-                  fieldName: 'name',
-                  onChangeCallback: (value, name) {
-                    setState(() {
-                      nextPaper = value;
-                    });
-                  },
+                child: Card(
+                  child: Column(
+                    children: [
+                      Text('Next Paper'),
+                      DropDownStream(
+                        currentValue: nextPaper,
+                        collectionName: kFirestorePapersCollectionName,
+                        fieldName: 'name',
+                        onChangeCallback: (value, name) {
+                          setState(() {
+                            nextPaper = value;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Expanded(
@@ -116,15 +134,13 @@ class RoundButton extends StatelessWidget {
 
 class DropDownStream<T, U> extends StatelessWidget {
   DropDownStream(
-      {this.label,
-      @required this.currentValue,
+      {@required this.currentValue,
       this.currentName,
       @required this.collectionName,
       @required this.fieldName,
       this.field2Name,
       this.onChangeCallback});
 
-  final String label;
   final T currentValue;
   final U currentName;
   final String collectionName;
@@ -150,7 +166,6 @@ class DropDownStream<T, U> extends StatelessWidget {
         }
         itemList.sort();
         return DropDownRow(
-          label: label,
           currentValue: currentValue,
           items: itemList,
           map: map,
@@ -165,13 +180,11 @@ class DropDownStream<T, U> extends StatelessWidget {
 
 class DropDownRow<T, U> extends StatelessWidget {
   DropDownRow(
-      {this.label,
-      @required this.currentValue,
+      {@required this.currentValue,
       @required this.items,
       this.map,
       this.onChangeCallback});
 
-  final String label;
   final T currentValue;
   final List<T> items;
   final Map<T, U> map;
@@ -192,20 +205,18 @@ class DropDownRow<T, U> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(label ?? ''),
-      trailing: DropdownButton<T>(
-        value: currentValue,
-        items: items.map(_buildDropDownMenuItem).toList(),
-        onChanged: (value) {
-          U name;
-          if (map != null) {
-            name = map[value];
-          }
-          print(value);
-          onChangeCallback(value, name);
-        },
-      ),
+    return DropdownButton<T>(
+      isExpanded: true,
+      value: currentValue,
+      items: items.map(_buildDropDownMenuItem).toList(),
+      onChanged: (value) {
+        U name;
+        if (map != null) {
+          name = map[value];
+        }
+        print(value);
+        onChangeCallback(value, name);
+      },
     );
   }
 }
