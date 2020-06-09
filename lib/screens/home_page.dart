@@ -37,7 +37,21 @@ class _HomePageState extends State<HomePage> {
         .collection(kFirestoreTracksCollectionName)
         .where('no', isEqualTo: trackNo)
         .getDocuments();
-    String documentId = snapshot.documents[0].documentID;
+    List<DocumentSnapshot> documents = snapshot.documents;
+
+    if (documents.length < 1) {
+      await _makeToast('Error! Track not found.', true);
+
+      return;
+    }
+
+    if (documents.length > 1) {
+      await _makeToast('Error! Duplicate track no. found.', true);
+
+      return;
+    }
+
+    String documentId = documents[0].documentID;
 
     await dialog.show();
 
