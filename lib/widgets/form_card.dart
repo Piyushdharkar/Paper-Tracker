@@ -23,7 +23,7 @@ class FormCard<T> extends StatelessWidget {
     return Card(
       elevation: 10.0,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(25.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
