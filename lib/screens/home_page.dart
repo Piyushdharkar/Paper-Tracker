@@ -2,8 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:papertracker/config/constants.dart';
-import 'package:papertracker/widgets/drop_down_stream.dart';
-import 'package:papertracker/widgets/header_text.dart';
+import 'package:papertracker/widgets/form_card.dart';
 import 'package:papertracker/widgets/rounded_button.dart';
 
 final _firestore = Firestore.instance;
@@ -67,93 +66,57 @@ class _HomePageState extends State<HomePage> {
             children: [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 40.0,
-                    vertical: 50.0,
-                  ),
-                  child: Card(
-                    elevation: 10.0,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                HeaderText(text: 'Track'),
-                                SizedBox(
-                                  height: 10.0,
-                                ),
-                                DropDownStream(
-                                  _firestore
-                                      .collection(
-                                          kFirestoreTracksCollectionName)
-                                      .snapshots(),
-                                  currentValue: trackNo,
-                                  fieldName: 'no',
-                                  field2Name: 'name',
-                                  onChangeCallback: (value, name) {
-                                    setState(() {
-                                      trackNo = value;
-                                      trackName = name;
-                                    });
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                HeaderText(text: 'Current paper'),
-                                SizedBox(
-                                  height: 10.0,
-                                ),
-                                DropDownStream(
-                                  _firestore
-                                      .collection(
-                                          kFirestorePapersCollectionName)
-                                      .snapshots(),
-                                  currentValue: currentPaper,
-                                  fieldName: 'name',
-                                  onChangeCallback: (value, name) {
-                                    setState(() {
-                                      currentPaper = value;
-                                    });
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                HeaderText(text: 'Next paper'),
-                                SizedBox(
-                                  height: 10.0,
-                                ),
-                                DropDownStream(
-                                  _firestore
-                                      .collection(
-                                          kFirestorePapersCollectionName)
-                                      .snapshots(),
-                                  currentValue: nextPaper,
-                                  fieldName: 'name',
-                                  onChangeCallback: (value, name) {
-                                    setState(() {
-                                      nextPaper = value;
-                                    });
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: FormCard(
+                          stream: _firestore
+                              .collection(kFirestoreTracksCollectionName)
+                              .snapshots(),
+                          headerText: 'Track',
+                          currentValue: trackNo,
+                          fieldName: 'no',
+                          field2Name: 'name',
+                          onChangeCallback: (value, name) {
+                            setState(() {
+                              trackNo = value;
+                              trackName = name;
+                            });
+                          },
+                        ),
                       ),
-                    ),
+                      Expanded(
+                        child: FormCard(
+                          stream: _firestore
+                              .collection(kFirestorePapersCollectionName)
+                              .snapshots(),
+                          headerText: 'Current Paper',
+                          currentValue: currentPaper,
+                          fieldName: 'name',
+                          onChangeCallback: (value, name) {
+                            setState(() {
+                              currentPaper = value;
+                            });
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: FormCard(
+                          stream: _firestore
+                              .collection(kFirestorePapersCollectionName)
+                              .snapshots(),
+                          headerText: 'Next Paper',
+                          currentValue: nextPaper,
+                          fieldName: 'name',
+                          onChangeCallback: (value, name) {
+                            setState(() {
+                              nextPaper = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

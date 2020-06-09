@@ -47,7 +47,6 @@ class DropDownRow<T, U> extends StatelessWidget {
         if (map != null) {
           name = map[value];
         }
-        print(value);
         onChangeCallback(value, name);
       },
     );
