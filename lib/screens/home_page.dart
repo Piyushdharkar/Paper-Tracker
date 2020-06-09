@@ -45,79 +45,85 @@ class _HomePageState extends State<HomePage> {
       ),
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 100.0),
+          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 100.0),
           child: Column(
             children: [
               Expanded(
                 child: Card(
-                  child: Column(
-                    children: [
-                      Text('Track no.'),
-                      DropDownStream(
-                        currentValue: trackNo,
-                        collectionName: kFirestoreTracksCollectionName,
-                        fieldName: 'no',
-                        field2Name: 'name',
-                        onChangeCallback: (value, name) {
-                          setState(() {
-                            trackNo = value;
-                            trackName = name;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Card(
-                  child: Column(
-                    children: [
-                      Text('Current Paper'),
-                      DropDownStream(
-                        currentValue: currentPaper,
-                        collectionName: kFirestorePapersCollectionName,
-                        fieldName: 'name',
-                        onChangeCallback: (value, name) {
-                          setState(() {
-                            currentPaper = value;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Card(
-                  child: Column(
-                    children: [
-                      Text('Next Paper'),
-                      DropDownStream(
-                        currentValue: nextPaper,
-                        collectionName: kFirestorePapersCollectionName,
-                        fieldName: 'name',
-                        onChangeCallback: (value, name) {
-                          setState(() {
-                            nextPaper = value;
-                          });
-                        },
-                      ),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Text('Track no.'),
+                              DropDownStream(
+                                currentValue: trackNo,
+                                collectionName: kFirestoreTracksCollectionName,
+                                fieldName: 'no',
+                                field2Name: 'name',
+                                onChangeCallback: (value, name) {
+                                  setState(() {
+                                    trackNo = value;
+                                    trackName = name;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Text('Current Paper'),
+                              DropDownStream(
+                                currentValue: currentPaper,
+                                collectionName: kFirestorePapersCollectionName,
+                                fieldName: 'name',
+                                onChangeCallback: (value, name) {
+                                  setState(() {
+                                    currentPaper = value;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Text('Next Paper'),
+                              DropDownStream(
+                                currentValue: nextPaper,
+                                collectionName: kFirestorePapersCollectionName,
+                                fieldName: 'name',
+                                onChangeCallback: (value, name) {
+                                  setState(() {
+                                    nextPaper = value;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
               SizedBox(
                 height: 20.0,
               ),
-              Expanded(
-                child: RoundButton(
-                  text: 'SUBMIT',
-                  onPressedCallback: () async {
-                    await _submitTrack();
-                  },
-                ),
-              )
+              RoundButton(
+                text: 'SUBMIT',
+                onPressedCallback: () async {
+                  await _submitTrack();
+                },
+              ),
             ],
           ),
         ),
