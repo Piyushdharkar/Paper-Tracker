@@ -19,8 +19,8 @@ class _HomePageState extends State<HomePage> {
   String currentPaper = 'CNN';
   String nextPaper = 'CNN';
 
-  void _makeToast(String message, bool error) {
-    Fluttertoast.showToast(
+  Future<void> _makeToast(String message, bool error) async {
+    await Fluttertoast.showToast(
         msg: message,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
@@ -44,13 +44,13 @@ class _HomePageState extends State<HomePage> {
         'currentPaper': currentPaper,
         'nextPaper': nextPaper,
       },
-    ).then((value) {
+    ).then((value) async {
       print("Successfully updated track.");
-      _makeToast("Successfully updated track.", false);
-    }, onError: (e) {
+      await _makeToast("Successfully updated track.", false);
+    }, onError: (e) async {
       print("Error! Failure to update track.");
       print(e);
-      _makeToast("Error! Failure to update track.", true);
+      await _makeToast("Error! Failure to update track.", true);
     });
   }
 

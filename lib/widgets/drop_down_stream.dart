@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:papertracker/widgets/drop_down_row.dart';
 
 class DropDownStream<T, U> extends StatelessWidget {
-  DropDownStream(@required this.stream,
+  DropDownStream(this.stream,
       {@required this.currentValue,
       this.currentName,
       @required this.fieldName,
