@@ -20,25 +20,30 @@ class DropDownRow<T, U> extends StatelessWidget {
     }
 
     return DropdownMenuItem(
-      child: Text('${item.toString()}$name'),
+      child: Text(
+        '${item.toString()}$name',
+        overflow: TextOverflow.ellipsis,
+      ),
       value: item,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<T>(
-      isExpanded: true,
-      value: currentValue,
-      items: items.map(_buildDropDownMenuItem).toList(),
-      onChanged: (value) {
-        U name;
-        if (map != null) {
-          name = map[value];
-        }
-        print(value);
-        onChangeCallback(value, name);
-      },
+    return Expanded(
+      child: DropdownButton<T>(
+        isExpanded: true,
+        value: currentValue,
+        items: items.map(_buildDropDownMenuItem).toList(),
+        onChanged: (value) {
+          U name;
+          if (map != null) {
+            name = map[value];
+          }
+          print(value);
+          onChangeCallback(value, name);
+        },
+      ),
     );
   }
 }
