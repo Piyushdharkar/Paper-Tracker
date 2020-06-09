@@ -15,6 +15,28 @@ class _HomePageState extends State<HomePage> {
   String currentPaper = 'CNN';
   String nextPaper = 'CNN';
 
+  Future<void> _submitTrack() async {
+    final snapshot = await _firestore
+        .collection(kFirestoreTracksCollectionName)
+        .where('no', isEqualTo: trackNo)
+        .getDocuments();
+    String documentId = snapshot.documents[0].documentID;
+    await _firestore
+        .collection(kFirestoreTracksCollectionName)
+        .document(documentId)
+        .updateData(
+      {
+        'currentPaper': currentPaper,
+        'nextPaper': nextPaper,
+      },
+    ).then((value) {
+      print("Successfully updated track.");
+    }, onError: (e) {
+      print("Error! Failure to update track.");
+      print(e);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,11 +107,14 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
+              SizedBox(
+                height: 20.0,
+              ),
               Expanded(
                 child: RoundButton(
                   text: 'SUBMIT',
-                  onPressedCallback: () {
-                    //_firestore.collection(kFirestoreTracksCollectionName);
+                  onPressedCallback: () async {
+                    await _submitTrack();
                   },
                 ),
               )
