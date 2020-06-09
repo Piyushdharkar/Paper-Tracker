@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                HeaderText(text: 'Track no.'),
+                                HeaderText(text: 'Track'),
                                 SizedBox(
                                   height: 10.0,
                                 ),
