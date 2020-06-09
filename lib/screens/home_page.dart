@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:papertracker/config/constants.dart';
 import 'package:papertracker/widgets/form_card.dart';
 import 'package:papertracker/widgets/rounded_button.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 final _firestore = Firestore.instance;
 
@@ -30,11 +31,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _submitTrack() async {
+    ProgressDialog dialog = ProgressDialog(context);
+
     final snapshot = await _firestore
         .collection(kFirestoreTracksCollectionName)
         .where('no', isEqualTo: trackNo)
         .getDocuments();
     String documentId = snapshot.documents[0].documentID;
+
+    await dialog.show();
+
     await _firestore
         .collection(kFirestoreTracksCollectionName)
         .document(documentId)
@@ -44,9 +50,11 @@ class _HomePageState extends State<HomePage> {
         'nextPaper': nextPaper,
       },
     ).then((value) async {
+      await dialog.hide();
       print("Successfully updated track.");
       await _makeToast("Successfully updated track.", false);
     }, onError: (e) async {
+      await dialog.hide();
       print("Error! Failure to update track.");
       print(e);
       await _makeToast("Error! Failure to update track.", true);
