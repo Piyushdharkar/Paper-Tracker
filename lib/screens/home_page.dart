@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:papertracker/config/constants.dart';
 import 'package:papertracker/widgets/drop_down_stream.dart';
+import 'package:papertracker/widgets/header_text.dart';
 import 'package:papertracker/widgets/rounded_button.dart';
 
 final _firestore = Firestore.instance;
@@ -78,11 +79,9 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Expanded(
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  'Track no.',
-                                  style: kCardHeaderTextStyle,
-                                ),
+                                HeaderText(text: 'Track no.'),
                                 SizedBox(
                                   height: 10.0,
                                 ),
@@ -106,11 +105,9 @@ class _HomePageState extends State<HomePage> {
                           ),
                           Expanded(
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  'Current Paper',
-                                  style: kCardHeaderTextStyle,
-                                ),
+                                HeaderText(text: 'Current paper'),
                                 SizedBox(
                                   height: 10.0,
                                 ),
@@ -132,11 +129,9 @@ class _HomePageState extends State<HomePage> {
                           ),
                           Expanded(
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  'Next Paper',
-                                  style: kCardHeaderTextStyle,
-                                ),
+                                HeaderText(text: 'Next paper'),
                                 SizedBox(
                                   height: 10.0,
                                 ),
