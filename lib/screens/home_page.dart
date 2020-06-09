@@ -61,95 +61,100 @@ class _HomePageState extends State<HomePage> {
       ),
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 100.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: Card(
-                  elevation: 10.0,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Text(
-                                'Track no.',
-                                style: kCardHeaderTextStyle,
-                              ),
-                              DropDownStream(
-                                _firestore
-                                    .collection(kFirestoreTracksCollectionName)
-                                    .snapshots(),
-                                currentValue: trackNo,
-                                fieldName: 'no',
-                                field2Name: 'name',
-                                onChangeCallback: (value, name) {
-                                  setState(() {
-                                    trackNo = value;
-                                    trackName = name;
-                                  });
-                                },
-                              ),
-                            ],
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 40.0,
+                    vertical: 50.0,
+                  ),
+                  child: Card(
+                    elevation: 10.0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Track no.',
+                                  style: kCardHeaderTextStyle,
+                                ),
+                                DropDownStream(
+                                  _firestore
+                                      .collection(
+                                          kFirestoreTracksCollectionName)
+                                      .snapshots(),
+                                  currentValue: trackNo,
+                                  fieldName: 'no',
+                                  field2Name: 'name',
+                                  onChangeCallback: (value, name) {
+                                    setState(() {
+                                      trackNo = value;
+                                      trackName = name;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Text(
-                                'Current Paper',
-                                style: kCardHeaderTextStyle,
-                              ),
-                              DropDownStream(
-                                _firestore
-                                    .collection(kFirestorePapersCollectionName)
-                                    .snapshots(),
-                                currentValue: currentPaper,
-                                fieldName: 'name',
-                                onChangeCallback: (value, name) {
-                                  setState(() {
-                                    currentPaper = value;
-                                  });
-                                },
-                              ),
-                            ],
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Current Paper',
+                                  style: kCardHeaderTextStyle,
+                                ),
+                                DropDownStream(
+                                  _firestore
+                                      .collection(
+                                          kFirestorePapersCollectionName)
+                                      .snapshots(),
+                                  currentValue: currentPaper,
+                                  fieldName: 'name',
+                                  onChangeCallback: (value, name) {
+                                    setState(() {
+                                      currentPaper = value;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Text(
-                                'Next Paper',
-                                style: kCardHeaderTextStyle,
-                              ),
-                              DropDownStream(
-                                _firestore
-                                    .collection(kFirestorePapersCollectionName)
-                                    .snapshots(),
-                                currentValue: nextPaper,
-                                fieldName: 'name',
-                                onChangeCallback: (value, name) {
-                                  setState(() {
-                                    nextPaper = value;
-                                  });
-                                },
-                              ),
-                            ],
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Next Paper',
+                                  style: kCardHeaderTextStyle,
+                                ),
+                                DropDownStream(
+                                  _firestore
+                                      .collection(
+                                          kFirestorePapersCollectionName)
+                                      .snapshots(),
+                                  currentValue: nextPaper,
+                                  fieldName: 'name',
+                                  onChangeCallback: (value, name) {
+                                    setState(() {
+                                      nextPaper = value;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                      ],
+                          SizedBox(
+                            height: 20.0,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 20.0,
               ),
               RoundButton(
                 text: 'SUBMIT',
