@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:papertracker/config/constants.dart';
 import 'package:papertracker/widgets/drop_down_stream.dart';
 import 'package:papertracker/widgets/rounded_button.dart';
@@ -17,6 +18,17 @@ class _HomePageState extends State<HomePage> {
   String currentPaper = 'CNN';
   String nextPaper = 'CNN';
 
+  void _makeToast(String message, bool error) {
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: error ? Colors.red : Colors.blueAccent,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
+
   Future<void> _submitTrack() async {
     final snapshot = await _firestore
         .collection(kFirestoreTracksCollectionName)
@@ -33,9 +45,11 @@ class _HomePageState extends State<HomePage> {
       },
     ).then((value) {
       print("Successfully updated track.");
+      _makeToast("Successfully updated track.", false);
     }, onError: (e) {
       print("Error! Failure to update track.");
       print(e);
+      _makeToast("Error! Failure to update track.", true);
     });
   }
 
