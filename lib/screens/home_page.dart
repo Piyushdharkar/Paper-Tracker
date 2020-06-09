@@ -63,6 +63,7 @@ class _HomePageState extends State<HomePage> {
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 100.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
                 child: Card(
@@ -74,7 +75,10 @@ class _HomePageState extends State<HomePage> {
                         Expanded(
                           child: Column(
                             children: [
-                              Text('Track no.'),
+                              Text(
+                                'Track no.',
+                                style: kCardHeaderTextStyle,
+                              ),
                               DropDownStream(
                                 _firestore
                                     .collection(kFirestoreTracksCollectionName)
@@ -95,7 +99,10 @@ class _HomePageState extends State<HomePage> {
                         Expanded(
                           child: Column(
                             children: [
-                              Text('Current Paper'),
+                              Text(
+                                'Current Paper',
+                                style: kCardHeaderTextStyle,
+                              ),
                               DropDownStream(
                                 _firestore
                                     .collection(kFirestorePapersCollectionName)
@@ -114,7 +121,10 @@ class _HomePageState extends State<HomePage> {
                         Expanded(
                           child: Column(
                             children: [
-                              Text('Next Paper'),
+                              Text(
+                                'Next Paper',
+                                style: kCardHeaderTextStyle,
+                              ),
                               DropDownStream(
                                 _firestore
                                     .collection(kFirestorePapersCollectionName)

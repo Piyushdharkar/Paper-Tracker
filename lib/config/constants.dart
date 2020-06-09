@@ -1,6 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 const kFirestoreTracksCollectionName = 'tracks';
 const kFirestorePapersCollectionName = 'papers';
 
-const kCardHeaderTextStyle = TextStyle();
+const kCardHeaderTextStyle = TextStyle(
+  fontSize: 20.0,
+);
