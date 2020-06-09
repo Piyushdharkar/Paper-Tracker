@@ -83,6 +83,9 @@ class _HomePageState extends State<HomePage> {
                                   'Track no.',
                                   style: kCardHeaderTextStyle,
                                 ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
                                 DropDownStream(
                                   _firestore
                                       .collection(
@@ -108,6 +111,9 @@ class _HomePageState extends State<HomePage> {
                                   'Current Paper',
                                   style: kCardHeaderTextStyle,
                                 ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
                                 DropDownStream(
                                   _firestore
                                       .collection(
@@ -130,6 +136,9 @@ class _HomePageState extends State<HomePage> {
                                 Text(
                                   'Next Paper',
                                   style: kCardHeaderTextStyle,
+                                ),
+                                SizedBox(
+                                  height: 10.0,
                                 ),
                                 DropDownStream(
                                   _firestore
