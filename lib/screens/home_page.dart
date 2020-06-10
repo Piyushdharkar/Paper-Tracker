@@ -101,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                             currentTrack: currentTrack,
                             hintText: 'Select the track',
                             defaultText: 'No tracks available',
-                            onChangeCallback: (Track track) {
+                            onChangeCallback: (track) {
                               setState(() {
                                 currentTrack = track;
                               });
@@ -125,9 +125,7 @@ class _HomePageState extends State<HomePage> {
                             noneValue: 'None',
                             onChangeCallback: (value) {
                               setState(() {
-                                if (currentTrack != null) {
-                                  currentTrack.currentPaper = value;
-                                }
+                                currentTrack?.currentPaper = value;
                               });
                             },
                           ),
@@ -149,9 +147,7 @@ class _HomePageState extends State<HomePage> {
                             noneValue: 'None',
                             onChangeCallback: (value) {
                               setState(() {
-                                if (currentTrack != null) {
-                                  currentTrack.nextPaper = value;
-                                }
+                                currentTrack?.nextPaper = value;
                               });
                             },
                           ),

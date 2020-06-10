@@ -21,7 +21,7 @@ class TrackDropDownRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text('${track.no}. '),
+          Text('${track.no}.'),
           Flexible(
             child: Text(
               track.name ?? 'No name',
