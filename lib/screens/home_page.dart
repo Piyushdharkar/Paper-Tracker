@@ -108,6 +108,8 @@ class _HomePageState extends State<HomePage> {
                               setState(() {
                                 trackNo = value;
                                 trackName = name;
+                                currentPaper = null;
+                                nextPaper = null;
                               });
                             },
                           ),
@@ -160,6 +162,19 @@ class _HomePageState extends State<HomePage> {
               RoundButton(
                 text: 'SUBMIT',
                 onPressedCallback: () async {
+                  if (trackNo == null) {
+                    await _makeToast('Please select a track', true);
+                    return;
+                  }
+                  if (currentPaper == null) {
+                    await _makeToast('Please select a current paper', true);
+                    return;
+                  }
+                  if (nextPaper == null) {
+                    await _makeToast('Please select a next paper', true);
+                    return;
+                  }
+
                   await _submitTrack();
                 },
               ),
