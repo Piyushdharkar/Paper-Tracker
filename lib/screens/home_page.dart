@@ -76,6 +76,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    currentTrack =
+        Track(no: null, name: null, currentPaper: null, nextPaper: null);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
