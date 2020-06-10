@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:papertracker/config/constants.dart';
+import 'package:papertracker/widgets/drop_down_stream.dart';
 import 'package:papertracker/widgets/form_card.dart';
 import 'package:papertracker/widgets/rounded_button.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -93,49 +94,55 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Expanded(
                         child: FormCard(
-                          stream: _firestore
-                              .collection(kFirestoreTracksCollectionName)
-                              .snapshots(),
                           headerText: 'Track',
-                          currentValue: trackNo,
-                          fieldName: 'no',
-                          field2Name: 'name',
-                          onChangeCallback: (value, name) {
-                            setState(() {
-                              trackNo = value;
-                              trackName = name;
-                            });
-                          },
+                          child: DropDownStream(
+                            _firestore
+                                .collection(kFirestoreTracksCollectionName)
+                                .snapshots(),
+                            currentValue: trackNo,
+                            fieldName: 'no',
+                            field2Name: 'name',
+                            onChangeCallback: (value, name) {
+                              setState(() {
+                                trackNo = value;
+                                trackName = name;
+                              });
+                            },
+                          ),
                         ),
                       ),
                       Expanded(
                         child: FormCard(
-                          stream: _firestore
-                              .collection(kFirestorePapersCollectionName)
-                              .snapshots(),
                           headerText: 'Current Paper',
-                          currentValue: currentPaper,
-                          fieldName: 'name',
-                          onChangeCallback: (value, name) {
-                            setState(() {
-                              currentPaper = value;
-                            });
-                          },
+                          child: DropDownStream(
+                            _firestore
+                                .collection(kFirestorePapersCollectionName)
+                                .snapshots(),
+                            currentValue: currentPaper,
+                            fieldName: 'name',
+                            onChangeCallback: (value, name) {
+                              setState(() {
+                                currentPaper = value;
+                              });
+                            },
+                          ),
                         ),
                       ),
                       Expanded(
                         child: FormCard(
-                          stream: _firestore
-                              .collection(kFirestorePapersCollectionName)
-                              .snapshots(),
-                          headerText: 'Next Paper',
-                          currentValue: nextPaper,
-                          fieldName: 'name',
-                          onChangeCallback: (value, name) {
-                            setState(() {
-                              nextPaper = value;
-                            });
-                          },
+                          headerText: 'Current Paper',
+                          child: DropDownStream(
+                            _firestore
+                                .collection(kFirestorePapersCollectionName)
+                                .snapshots(),
+                            currentValue: nextPaper,
+                            fieldName: 'name',
+                            onChangeCallback: (value, name) {
+                              setState(() {
+                                nextPaper = value;
+                              });
+                            },
+                          ),
                         ),
                       ),
                     ],
