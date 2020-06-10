@@ -26,7 +26,7 @@ class CustomDropDownStream<T, U> extends StatelessWidget {
     return StreamBuilder(
       stream: stream,
       builder: (context, snapshot) {
-        if (!snapshot.hasData) {
+        if (snapshot == null || snapshot.hasData == null || !snapshot.hasData) {
           return Center(
             child: CircularProgressIndicator(),
           );
