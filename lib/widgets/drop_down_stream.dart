@@ -9,6 +9,7 @@ class DropDownStream<T, U> extends StatelessWidget {
     this.field2Name,
     this.hintText,
     this.defaultText,
+    this.noneValue,
     this.onChangeCallback,
   });
 
@@ -20,6 +21,7 @@ class DropDownStream<T, U> extends StatelessWidget {
   final String field2Name;
   final String hintText;
   final String defaultText;
+  final T noneValue;
   final Function onChangeCallback;
 
   @override
@@ -39,6 +41,9 @@ class DropDownStream<T, U> extends StatelessWidget {
           itemList.add(value);
         }
         itemList.sort();
+        if (noneValue != null) {
+          itemList.add(noneValue);
+        }
         return DropDownRow(
           currentValue: currentValue,
           items: itemList,
