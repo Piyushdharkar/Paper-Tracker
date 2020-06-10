@@ -29,30 +29,28 @@ class DropDownStream<T, U> extends StatelessWidget {
     return StreamBuilder(
       stream: stream,
       builder: (context, snapshot) {
-        final List<T> itemList = [];
-        final Map<T, U> map = field2Name == null ? null : {};
+        final List<T> field1List = [];
+        final Map<T, U> field1Tofield2Map = field2Name == null ? null : {};
         final items = snapshot.data.documents;
         for (var item in items) {
-          T value = item.data[fieldName];
+          T field1 = item.data[fieldName];
           if (enabledField2) {
-            U name = item.data[field2Name];
-            map[value] = name;
+            U field2 = item.data[field2Name];
+            field1Tofield2Map[field1] = field2;
           }
-          itemList.add(value);
+          field1List.add(field1);
         }
-        itemList.sort();
+        field1List.sort();
         if (noneValue != null) {
-          itemList.add(noneValue);
+          field1List.add(noneValue);
         }
         return DropDownRow(
           currentValue: currentValue,
-          items: itemList,
-          map: map,
+          field1List: field1List,
+          field1Tofield2Map: field1Tofield2Map,
           hintText: hintText,
           defaultText: defaultText,
-          onChangeCallback: (value, name) {
-            onChangeCallback(value, name);
-          },
+          onChangeCallback: onChangeCallback,
         );
       },
     );
