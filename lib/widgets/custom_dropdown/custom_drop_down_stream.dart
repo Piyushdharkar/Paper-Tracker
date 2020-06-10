@@ -26,6 +26,12 @@ class CustomDropDownStream<T, U> extends StatelessWidget {
     return StreamBuilder(
       stream: stream,
       builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
         final List<T> field1List = [];
         final items = snapshot.data.documents;
         for (var item in items) {

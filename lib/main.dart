@@ -10,6 +10,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData.light().copyWith(
+        textTheme: TextTheme(
+          subtitle1: TextStyle(
+            color: Colors.black,
+            fontFamily: 'Raleway',
+          ),
+          bodyText2: TextStyle(
+            color: Colors.black,
+            fontFamily: 'Raleway',
+          ),
+          button: TextStyle(
+            color: Colors.black,
+            fontFamily: 'Raleway',
+          ),
+        ),
+      ),
       home: HomePage(),
     );
   }
