@@ -25,6 +25,12 @@ class TrackDropDownStream extends StatelessWidget {
     return StreamBuilder(
       stream: stream,
       builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
         final List<Track> tracks = [];
         final items = snapshot.data.documents;
         for (var item in items) {
