@@ -25,35 +25,35 @@ class TrackDropDownStream extends StatelessWidget {
     return StreamBuilder(
       stream: stream,
       builder: (context, snapshot) {
-        if (snapshot == null || snapshot.hasData == null || !snapshot.hasData) {
-          return Center(
-            child: CircularProgressIndicator(),
+        if (snapshot.hasData) {
+          final List<Track> tracks = [];
+          final items = snapshot.data.documents;
+          for (var item in items) {
+            int no = item.data['no'];
+            String name = item.data['name'];
+            String currentPaper = item.data['currentPaper'];
+            String nextPaper = item.data['nextPaper'];
+
+            Track track = Track(
+                no: no,
+                name: name,
+                currentPaper: currentPaper,
+                nextPaper: nextPaper);
+
+            tracks.add(track);
+          }
+          tracks.sort((a, b) => a.no - b.no);
+          return TrackDropDownRow(
+            currentTrack: currentTrack,
+            tracks: tracks,
+            hintText: hintText,
+            defaultText: defaultText,
+            onChangeCallback: onChangeCallback,
           );
         }
 
-        final List<Track> tracks = [];
-        final items = snapshot.data.documents;
-        for (var item in items) {
-          int no = item.data['no'];
-          String name = item.data['name'];
-          String currentPaper = item.data['currentPaper'];
-          String nextPaper = item.data['nextPaper'];
-
-          Track track = Track(
-              no: no,
-              name: name,
-              currentPaper: currentPaper,
-              nextPaper: nextPaper);
-
-          tracks.add(track);
-        }
-        tracks.sort((a, b) => a.no - b.no);
-        return TrackDropDownRow(
-          currentTrack: currentTrack,
-          tracks: tracks,
-          hintText: hintText,
-          defaultText: defaultText,
-          onChangeCallback: onChangeCallback,
+        return Center(
+          child: Text('Loading...'),
         );
       },
     );
