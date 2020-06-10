@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 
 class DropDownRow<T, U> extends StatelessWidget {
-  DropDownRow(
-      {@required this.currentValue,
-      @required this.items,
-      this.map,
-      this.onChangeCallback});
+  DropDownRow({
+    @required this.currentValue,
+    @required this.items,
+    this.map,
+    this.hintText,
+    this.onChangeCallback,
+  });
+
+  bool get enabledField2 => map != null;
 
   final T currentValue;
   final List<T> items;
   final Map<T, U> map;
+  final String hintText;
   final Function onChangeCallback;
 
   DropdownMenuItem<T> _buildDropDownMenuItem(T item) {
-    String name = '';
-
-    if (map != null) {
-      name = map[item].toString();
-    }
+    String name = enabledField2 ? map[item].toString() : null;
 
     return DropdownMenuItem(
-      child: map != null
+      child: enabledField2
           ? Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -40,13 +41,13 @@ class DropDownRow<T, U> extends StatelessWidget {
   Widget build(BuildContext context) {
     return DropdownButton<T>(
       isExpanded: true,
-      value: currentValue,
+      hint: Text(hintText ?? ''),
+      value: items.contains(currentValue) ? currentValue : null,
       items: items.map(_buildDropDownMenuItem).toList(),
       onChanged: (value) {
         U name;
-        if (map != null) {
-          name = map[value];
-        }
+        name = enabledField2 ? map[value] : null;
+
         onChangeCallback(value, name);
       },
     );

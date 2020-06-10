@@ -15,10 +15,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int trackNo = 1;
-  String trackName = 'Machine Learning';
-  String currentPaper = 'CNN';
-  String nextPaper = 'CNN';
+  int trackNo;
+  String trackName;
+  String currentPaper;
+  String nextPaper;
 
   Future<void> _makeToast(String message, bool error) async {
     await Fluttertoast.showToast(
@@ -102,6 +102,7 @@ class _HomePageState extends State<HomePage> {
                             currentValue: trackNo,
                             fieldName: 'no',
                             field2Name: 'name',
+                            hintText: 'Select the track',
                             onChangeCallback: (value, name) {
                               setState(() {
                                 trackNo = value;
@@ -120,6 +121,7 @@ class _HomePageState extends State<HomePage> {
                                 .snapshots(),
                             currentValue: currentPaper,
                             fieldName: 'name',
+                            hintText: 'Select the current paper',
                             onChangeCallback: (value, name) {
                               setState(() {
                                 currentPaper = value;
@@ -130,13 +132,14 @@ class _HomePageState extends State<HomePage> {
                       ),
                       Expanded(
                         child: FormCard(
-                          headerText: 'Current Paper',
+                          headerText: 'Next Paper',
                           child: DropDownStream(
                             _firestore
                                 .collection(kFirestorePapersCollectionName)
                                 .snapshots(),
                             currentValue: nextPaper,
                             fieldName: 'name',
+                            hintText: 'Select the next paper',
                             onChangeCallback: (value, name) {
                               setState(() {
                                 nextPaper = value;

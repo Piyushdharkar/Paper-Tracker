@@ -2,16 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:papertracker/widgets/drop_down_row.dart';
 
 class DropDownStream<T, U> extends StatelessWidget {
-  DropDownStream(this.stream,
-      {@required this.currentValue,
-      @required this.fieldName,
-      this.field2Name,
-      this.onChangeCallback});
+  DropDownStream(
+    this.stream, {
+    @required this.currentValue,
+    @required this.fieldName,
+    this.field2Name,
+    this.hintText,
+    this.onChangeCallback,
+  });
+
+  bool get enabledField2 => field2Name != null;
 
   final stream;
   final T currentValue;
   final String fieldName;
   final String field2Name;
+  final String hintText;
   final Function onChangeCallback;
 
   @override
@@ -24,7 +30,7 @@ class DropDownStream<T, U> extends StatelessWidget {
         final items = snapshot.data.documents;
         for (var item in items) {
           T value = item.data[fieldName];
-          if (field2Name != null) {
+          if (enabledField2) {
             U name = item.data[field2Name];
             map[value] = name;
           }
@@ -35,6 +41,7 @@ class DropDownStream<T, U> extends StatelessWidget {
           currentValue: currentValue,
           items: itemList,
           map: map,
+          hintText: hintText,
           onChangeCallback: (value, name) {
             onChangeCallback(value, name);
           },
