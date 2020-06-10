@@ -6,6 +6,7 @@ class DropDownRow<T, U> extends StatelessWidget {
     @required this.items,
     this.map,
     this.hintText,
+    this.defaultText,
     this.onChangeCallback,
   });
 
@@ -15,6 +16,7 @@ class DropDownRow<T, U> extends StatelessWidget {
   final List<T> items;
   final Map<T, U> map;
   final String hintText;
+  final String defaultText;
   final Function onChangeCallback;
 
   DropdownMenuItem<T> _buildDropDownMenuItem(T item) {
@@ -41,7 +43,7 @@ class DropDownRow<T, U> extends StatelessWidget {
   Widget build(BuildContext context) {
     return DropdownButton<T>(
       isExpanded: true,
-      hint: Text(hintText ?? ''),
+      hint: items.length > 0 ? Text(hintText ?? '') : Text(defaultText ?? ''),
       value: items.contains(currentValue) ? currentValue : null,
       items: items.map(_buildDropDownMenuItem).toList(),
       onChanged: (value) {

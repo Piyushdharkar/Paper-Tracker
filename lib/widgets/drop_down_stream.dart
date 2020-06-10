@@ -8,6 +8,7 @@ class DropDownStream<T, U> extends StatelessWidget {
     @required this.fieldName,
     this.field2Name,
     this.hintText,
+    this.defaultText,
     this.onChangeCallback,
   });
 
@@ -18,6 +19,7 @@ class DropDownStream<T, U> extends StatelessWidget {
   final String fieldName;
   final String field2Name;
   final String hintText;
+  final String defaultText;
   final Function onChangeCallback;
 
   @override
@@ -42,6 +44,7 @@ class DropDownStream<T, U> extends StatelessWidget {
           items: itemList,
           map: map,
           hintText: hintText,
+          defaultText: defaultText,
           onChangeCallback: (value, name) {
             onChangeCallback(value, name);
           },

@@ -103,6 +103,7 @@ class _HomePageState extends State<HomePage> {
                             fieldName: 'no',
                             field2Name: 'name',
                             hintText: 'Select the track',
+                            defaultText: 'No tracks available',
                             onChangeCallback: (value, name) {
                               setState(() {
                                 trackNo = value;
@@ -118,10 +119,12 @@ class _HomePageState extends State<HomePage> {
                           child: DropDownStream(
                             _firestore
                                 .collection(kFirestorePapersCollectionName)
+                                .where('trackNo', isEqualTo: trackNo)
                                 .snapshots(),
                             currentValue: currentPaper,
                             fieldName: 'name',
                             hintText: 'Select the current paper',
+                            defaultText: 'No papers available',
                             onChangeCallback: (value, name) {
                               setState(() {
                                 currentPaper = value;
@@ -136,10 +139,12 @@ class _HomePageState extends State<HomePage> {
                           child: DropDownStream(
                             _firestore
                                 .collection(kFirestorePapersCollectionName)
+                                .where('trackNo', isEqualTo: trackNo)
                                 .snapshots(),
                             currentValue: nextPaper,
                             fieldName: 'name',
                             hintText: 'Select the next paper',
+                            defaultText: 'No papers available',
                             onChangeCallback: (value, name) {
                               setState(() {
                                 nextPaper = value;
