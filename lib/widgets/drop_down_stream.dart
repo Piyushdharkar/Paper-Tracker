@@ -4,14 +4,12 @@ import 'package:papertracker/widgets/drop_down_row.dart';
 class DropDownStream<T, U> extends StatelessWidget {
   DropDownStream(this.stream,
       {@required this.currentValue,
-      this.currentName,
       @required this.fieldName,
       this.field2Name,
       this.onChangeCallback});
 
   final stream;
   final T currentValue;
-  final U currentName;
   final String fieldName;
   final String field2Name;
   final Function onChangeCallback;
