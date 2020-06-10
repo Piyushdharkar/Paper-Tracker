@@ -10,14 +10,16 @@ class RoundButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       elevation: 10.0,
-      color: Colors.lightBlueAccent,
+      color: Colors.lightBlue,
       child: FlatButton(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 50.0, vertical: 20.0),
           child: Text(
             text,
             style: TextStyle(
-              fontSize: 20.0,
+              color: Colors.white,
+              fontSize: 22.0,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),

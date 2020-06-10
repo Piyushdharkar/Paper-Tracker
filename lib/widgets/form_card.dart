@@ -12,6 +12,11 @@ class FormCard<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 10.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(20.0),
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(25.0),
         child: Column(
