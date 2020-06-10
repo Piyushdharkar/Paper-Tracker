@@ -2,9 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:papertracker/config/constants.dart';
-import 'package:papertracker/widgets/drop_down_stream.dart';
+import 'package:papertracker/models/track.dart';
+import 'package:papertracker/widgets/custom_dropdown/custom_drop_down_stream.dart';
 import 'package:papertracker/widgets/form_card.dart';
 import 'package:papertracker/widgets/rounded_button.dart';
+import 'package:papertracker/widgets/track_drop_down/track_drop_down_stream.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 final _firestore = Firestore.instance;
@@ -15,10 +17,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int trackNo;
-  String trackName;
-  String currentPaper;
-  String nextPaper;
+  Track currentTrack;
 
   Future<void> _makeToast(String message, bool error) async {
     await Fluttertoast.showToast(
@@ -36,7 +35,7 @@ class _HomePageState extends State<HomePage> {
 
     final snapshot = await _firestore
         .collection(kFirestoreTracksCollectionName)
-        .where('no', isEqualTo: trackNo)
+        .where('no', isEqualTo: currentTrack?.no)
         .getDocuments();
     List<DocumentSnapshot> documents = snapshot.documents;
 
@@ -61,8 +60,8 @@ class _HomePageState extends State<HomePage> {
         .document(documentId)
         .updateData(
       {
-        'currentPaper': currentPaper,
-        'nextPaper': nextPaper,
+        'currentPaper': currentTrack?.currentPaper,
+        'nextPaper': currentTrack?.nextPaper,
       },
     ).then((value) async {
       await dialog.hide();
@@ -95,21 +94,16 @@ class _HomePageState extends State<HomePage> {
                       Expanded(
                         child: FormCard(
                           headerText: 'Track',
-                          child: DropDownStream(
+                          child: TrackDropDownStream(
                             _firestore
                                 .collection(kFirestoreTracksCollectionName)
                                 .snapshots(),
-                            currentValue: trackNo,
-                            fieldName: 'no',
-                            field2Name: 'name',
+                            currentTrack: currentTrack,
                             hintText: 'Select the track',
                             defaultText: 'No tracks available',
-                            onChangeCallback: (value, name) {
+                            onChangeCallback: (Track track) {
                               setState(() {
-                                trackNo = value;
-                                trackName = name;
-                                currentPaper = null;
-                                nextPaper = null;
+                                currentTrack = track;
                               });
                             },
                           ),
@@ -118,19 +112,22 @@ class _HomePageState extends State<HomePage> {
                       Expanded(
                         child: FormCard(
                           headerText: 'Current Paper',
-                          child: DropDownStream(
+                          child: CustomDropDownStream(
                             _firestore
                                 .collection(kFirestorePapersCollectionName)
-                                .where('trackNo', isEqualTo: trackNo ?? -1)
+                                .where('trackNo',
+                                    isEqualTo: currentTrack?.no ?? -1)
                                 .snapshots(),
-                            currentValue: currentPaper,
+                            currentValue: currentTrack?.currentPaper,
                             fieldName: 'name',
                             hintText: 'Select the current paper',
                             defaultText: 'No papers available',
                             noneValue: 'None',
-                            onChangeCallback: (value, name) {
+                            onChangeCallback: (value) {
                               setState(() {
-                                currentPaper = value;
+                                if (currentTrack != null) {
+                                  currentTrack.currentPaper = value;
+                                }
                               });
                             },
                           ),
@@ -139,19 +136,22 @@ class _HomePageState extends State<HomePage> {
                       Expanded(
                         child: FormCard(
                           headerText: 'Next Paper',
-                          child: DropDownStream(
+                          child: CustomDropDownStream(
                             _firestore
                                 .collection(kFirestorePapersCollectionName)
-                                .where('trackNo', isEqualTo: trackNo ?? -1)
+                                .where('trackNo',
+                                    isEqualTo: currentTrack?.no ?? -1)
                                 .snapshots(),
-                            currentValue: nextPaper,
+                            currentValue: currentTrack?.nextPaper,
                             fieldName: 'name',
                             hintText: 'Select the next paper',
                             defaultText: 'No papers available',
                             noneValue: 'None',
-                            onChangeCallback: (value, name) {
+                            onChangeCallback: (value) {
                               setState(() {
-                                nextPaper = value;
+                                if (currentTrack != null) {
+                                  currentTrack.nextPaper = value;
+                                }
                               });
                             },
                           ),
@@ -164,15 +164,15 @@ class _HomePageState extends State<HomePage> {
               RoundButton(
                 text: 'SUBMIT',
                 onPressedCallback: () async {
-                  if (trackNo == null) {
+                  if (currentTrack == null) {
                     await _makeToast('Please select a track', true);
                     return;
                   }
-                  if (currentPaper == null) {
+                  if (currentTrack.currentPaper == null) {
                     await _makeToast('Please select a current paper', true);
                     return;
                   }
-                  if (nextPaper == null) {
+                  if (currentTrack.nextPaper == null) {
                     await _makeToast('Please select a next paper', true);
                     return;
                   }
