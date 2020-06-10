@@ -19,10 +19,15 @@ class TrackDropDownRow extends StatelessWidget {
   DropdownMenuItem _buildDropDownMenuItem(Track track) {
     return DropdownMenuItem(
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Text('${track.no}. '),
-          Text(track.name ?? 'No name'),
+          Flexible(
+            child: Text(
+              track.name ?? 'No name',
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
         ],
       ),
       value: track,
