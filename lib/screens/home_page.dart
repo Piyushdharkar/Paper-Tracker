@@ -18,6 +18,19 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Track currentTrack;
+  bool isButtonDisabled = false;
+
+  void _disableButton() {
+    setState(() {
+      isButtonDisabled = true;
+    });
+  }
+
+  void _enableButton() {
+    setState(() {
+      isButtonDisabled = false;
+    });
+  }
 
   Future<void> _makeToast(String message, bool error) async {
     await Fluttertoast.showToast(
@@ -31,7 +44,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _submitTrack() async {
-    ProgressDialog dialog = ProgressDialog(context);
+    ProgressDialog dialog = ProgressDialog(context, isDismissible: false);
 
     final snapshot = await _firestore
         .collection(kFirestoreTracksCollectionName)
@@ -64,10 +77,12 @@ class _HomePageState extends State<HomePage> {
         'nextPaper': currentTrack?.nextPaper,
       },
     ).then((value) async {
+      _enableButton();
       await dialog.hide();
       print("Successfully updated track.");
       await _makeToast("Successfully updated track.", false);
     }, onError: (e) async {
+      _enableButton();
       await dialog.hide();
       print("Error! Failure to update track.");
       print(e);
@@ -159,22 +174,26 @@ class _HomePageState extends State<HomePage> {
               ),
               RoundButton(
                 text: 'SUBMIT',
-                onPressedCallback: () async {
-                  if (currentTrack == null) {
-                    await _makeToast('Please select a track', true);
-                    return;
-                  }
-                  if (currentTrack.currentPaper == null) {
-                    await _makeToast('Please select a current paper', true);
-                    return;
-                  }
-                  if (currentTrack.nextPaper == null) {
-                    await _makeToast('Please select a next paper', true);
-                    return;
-                  }
+                onPressedCallback: !isButtonDisabled
+                    ? () async {
+                        if (currentTrack == null) {
+                          await _makeToast('Please select a track', true);
+                          return;
+                        }
+                        if (currentTrack.currentPaper == null) {
+                          await _makeToast(
+                              'Please select a current paper', true);
+                          return;
+                        }
+                        if (currentTrack.nextPaper == null) {
+                          await _makeToast('Please select a next paper', true);
+                          return;
+                        }
 
-                  await _submitTrack();
-                },
+                        _disableButton();
+                        await _submitTrack();
+                      }
+                    : () {},
               ),
             ],
           ),
